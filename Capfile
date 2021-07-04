@@ -30,6 +30,7 @@ require "capistrano/rbenv"
 require "capistrano/bundler"
 require "capistrano/rails/migrations"
 require "capistrano/puma"
+require "sshkit/sudo"
 install_plugin Capistrano::Puma
 install_plugin Capistrano::Puma::Systemd
 install_plugin Capistrano::Puma::Nginx
