@@ -12,10 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_07_01_051727) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "tasks", force: :cascade do |t|
+  create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "body", null: false
     t.boolean "is_completed", default: false
     t.datetime "completed_at"
