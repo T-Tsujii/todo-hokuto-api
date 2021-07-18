@@ -1,10 +1,6 @@
 class Task < ApplicationRecord
   validates :body, presence: true
 
-  def attribute_slice
-    slice(:id, :body, :is_completed).transform_keys { |k| k.camelize(:lower) }
-  end
-
   def self.enemy_message
     [
       "汚物は消毒だ～!",

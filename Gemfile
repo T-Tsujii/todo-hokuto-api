@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.3'
 
+gem 'active_model_serializers'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 gem 'mysql2', '~> 0.5'
 gem 'puma', '~> 5.0'
@@ -13,6 +14,7 @@ gem 'whenever'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem "capistrano", "~> 3.10", require: false
   gem "capistrano-rails", "~> 1.6", require: false
   gem 'capistrano-rbenv', '~> 2.2'

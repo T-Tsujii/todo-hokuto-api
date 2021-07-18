@@ -1,6 +1,6 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://t-tsujii.github.io" # "http://localhost:8080",
+    origins "https://t-tsujii.github.io"
 
     resource "*",
              headers: :any,

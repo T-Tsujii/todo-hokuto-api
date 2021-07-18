@@ -3,14 +3,12 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    tasks = Task.order(updated_at: :asc).select(:id, :body, :is_completed).map { |task| task.attributes.transform_keys { |k| k.camelize(:lower) } }
-
-    render json: tasks
+    render json: Task.order(updated_at: :asc)
   end
 
   # GET /tasks/1
   def show
-    render json: @task.attribute_slice
+    render json: @task
   end
 
   # POST /tasks
@@ -19,8 +17,9 @@ class TasksController < ApplicationController
     task = Task.new(task_params)
 
     if task.save
-      json = { task: task.attribute_slice, message: Task.enemy_message }
-      render json: json, status: :created, location: task
+      render_task = ActiveModelSerializers::SerializableResource.new(task).serializable_hash
+      json = { task: render_task, message: Task.enemy_message }
+      render json: json, status: :created
     else
       render json: task.errors, status: :unprocessable_entity
     end
@@ -36,7 +35,7 @@ class TasksController < ApplicationController
     }
 
     if is_completed != @task.is_completed && @task.update(task_params)
-      render json: @task.attribute_slice
+      render json: @task
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -44,7 +43,7 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1
   def destroy
-    @task.destroy
+    @task.destroy!
   end
 
   private
