@@ -24,12 +24,14 @@ class TasksController < ApplicationController
   end
 
   def update
-    is_completed = params[:isCompleted]
+    is_completed = if params[:isCompleted].instance_of?(String)
+                     params[:isCompleted] == "true"
+                   else
+                     params[:isCompleted]
+                   end
 
-    task_params = {
-      is_completed: is_completed,
-      completed_at: is_completed ? Time.current : nil
-    }
+    task_params = { is_completed: is_completed }
+    task_params[:completed_at] = Time.current if is_completed
 
     if is_completed != @task.is_completed && @task.update(task_params)
       render json: @task
