@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+        include DeviseTokenAuth::Concerns::SetUserByToken
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
   before_action :authenticate, if: -> { Rails.env.production? }
