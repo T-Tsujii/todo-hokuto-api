@@ -1,20 +1,17 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy]
 
-  # GET /tasks
   def index
-    render json: Task.order(updated_at: :asc)
+    render json: current_user.tasks.order(updated_at: :asc)
   end
 
-  # GET /tasks/1
   def show
     render json: @task
   end
 
-  # POST /tasks
   def create
     task_params = params.permit(:body)
-    task = Task.new(task_params)
+    task = current_user.tasks.new(task_params)
 
     if task.save
       render_task = ActiveModelSerializers::SerializableResource.new(task).serializable_hash
@@ -25,7 +22,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1
   def update
     is_completed = params[:isCompleted]
 
@@ -41,15 +37,13 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1
   def destroy
     @task.destroy!
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_task
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 end
